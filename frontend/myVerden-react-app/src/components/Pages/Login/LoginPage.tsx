@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Eye, EyeOff, Loader2Icon } from 'lucide-react';
 
 import loginPagePicture from '@/assets/login_page_picture.png';
+import loginPageSketch from '@/assets/login_page_sketch.png';
 import bigLogo from '@/assets/myVerden_logo_big.svg';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -22,6 +23,7 @@ import {
 
 const LoginPage = () => {
   const loginPagePictureAlt = 'login_page_picture';
+  const loginPageSketchAlt = 'login_page_sketch';
   const bigLogoAlt = 'big_logo';
 
   const navigate = useNavigate();
@@ -53,15 +55,58 @@ const LoginPage = () => {
     }, 5000);
   }
 
+  const [maskPos, setMaskPos] = useState({ x: -1000, y: -1000 });
+  const [spotlightActive, setSpotlightActive] = useState(true);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!spotlightActive) {
+      return;
+    }
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMaskPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
+
+  const handleMouseLeave = () => {
+    setMaskPos({ x: -1000, y: -1000 });
+  };
+
   return (
-    <div className='relative w-full h-screen'>
+    <div
+      className='relative w-full h-screen overflow-hidden'
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      <img
+        src={loginPageSketch}
+        alt={loginPageSketchAlt}
+        className='w-full h-full absolute inset-0 object-cover'
+      />
       <img
         src={loginPagePicture}
         alt={loginPagePictureAlt}
-        className='w-full h-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 object-cover'
+        className='w-full h-full absolute inset-0 object-cover pointer-events-none'
+        style={{
+          WebkitMaskImage: spotlightActive
+            ? `radial-gradient(circle 100px at ${maskPos.x}px ${maskPos.y}px, transparent 0, transparent 100px, white 100px)`
+            : 'none',
+          maskImage: spotlightActive
+            ? `radial-gradient(circle 100px at ${maskPos.x}px ${maskPos.y}px, transparent 0, transparent 100px, white 100px)`
+            : 'none',
+        }}
       />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className='w-2/3 space-y-6'>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          onMouseEnter={() => {
+            setSpotlightActive(false);
+            setMaskPos({ x: -1000, y: -1000 });
+          }}
+          onMouseLeave={() => {
+            setSpotlightActive(true);
+            setMaskPos({ x: -1000, y: -1000 });
+          }}
+          className='w-2/3 space-y-6'
+        >
           <div className='flex flex-col absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/5 w-2/11 h-4/9 primary-glass gap-5 overflow-hidden'>
             <img src={bigLogo} alt={bigLogoAlt} className='p-4 w-full' />
             <div className='px-5 grid w-full items-center gap-3'>
