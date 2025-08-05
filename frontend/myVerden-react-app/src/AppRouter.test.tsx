@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it, vi } from 'vitest';
 
 import AppRouter from './AppRouter';
@@ -19,11 +18,8 @@ describe('AppRouter', () => {
     (useAuthStore as any).mockImplementation((selector: any) =>
       selector({ isAuthenticated: false }),
     );
-    render(
-      <MemoryRouter initialEntries={['/login']}>
-        <AppRouter />
-      </MemoryRouter>,
-    );
+    window.history.pushState({}, '', '/login');
+    render(<AppRouter />);
     expect(screen.getByText('LoginPage')).toBeInTheDocument();
   });
 
@@ -31,11 +27,8 @@ describe('AppRouter', () => {
     (useAuthStore as any).mockImplementation((selector: any) =>
       selector({ isAuthenticated: true }),
     );
-    render(
-      <MemoryRouter initialEntries={['/login']}>
-        <AppRouter />
-      </MemoryRouter>,
-    );
+    window.history.pushState({}, '', '/login');
+    render(<AppRouter />);
     expect(screen.queryByText('LoginPage')).not.toBeInTheDocument();
   });
 
@@ -43,11 +36,8 @@ describe('AppRouter', () => {
     (useAuthStore as any).mockImplementation((selector: any) =>
       selector({ isAuthenticated: false }),
     );
-    render(
-      <MemoryRouter initialEntries={['/']}>
-        <AppRouter />
-      </MemoryRouter>,
-    );
+    window.history.pushState({}, '', '/');
+    render(<AppRouter />);
     expect(screen.getByText('LoginPage')).toBeInTheDocument();
   });
 
@@ -55,11 +45,8 @@ describe('AppRouter', () => {
     (useAuthStore as any).mockImplementation((selector: any) =>
       selector({ isAuthenticated: true }),
     );
-    render(
-      <MemoryRouter initialEntries={['/']}>
-        <AppRouter />
-      </MemoryRouter>,
-    );
+    window.history.pushState({}, '', '/');
+    render(<AppRouter />);
     expect(screen.queryByText('LoginPage')).not.toBeInTheDocument();
   });
 });
