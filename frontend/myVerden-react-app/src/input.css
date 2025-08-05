@@ -68,7 +68,7 @@
   /* Main */
   --color-primary: #214b20;
   --color-primary-hover: #365a35;
-  --color-primary-foreground: #ffffff;
+  --color-primary-foreground: #dad6cf;
 
   --color-secondary: #6d9c5f;
   --color-secondary-foreground: #ffffff;
@@ -79,7 +79,7 @@
   --color-muted: #f4f4f4;
   --color-muted-foreground: #555555;
 
-  --color-background: #F6F5F3;
+  --color-background: #f6f5f3;
   --color-foreground: #1f1f1f;
 
   --color-border: #e0e0e0;
@@ -88,6 +88,7 @@
 
   --color-destructive: #dc2626;
   --color-destructive-foreground: #ffffff;
+  --color-destructive-standard: #ff0000;
 
   /* Prestige */
   --color-gold: #d4af37;
@@ -146,51 +147,42 @@
 /* Buttons */
 
 .primary-button {
-  background-color: var(--color-ring);
   height: fit-content;
   width: fit-content;
-  box-shadow: inset 0 0 0.5rem 0.25rem var(--color-primary);
+  box-shadow: inset 0 0 2rem 0.25rem var(--color-primary);
   padding-inline: 1rem;
 }
 
-.primary-button:focus, .primary-button:hover {
+.primary-button:focus,
+.primary-button:hover {
+  background-color: var(--color-primary-hover);
   outline: none;
-  box-shadow: 0 0 0.25rem 0 var(--color-primary-hover);
+  box-shadow: 0 0 3rem 0 var(--color-primary-hover);
   cursor: pointer;
 }
 
 .primary-glass {
   background: rgba(165, 43, 43, 0.1);
-  backdrop-filter: blur(0.5rem);          
-  -webkit-backdrop-filter: blur(0.2rem);   /* Safari */
+  backdrop-filter: blur(0.5rem);
+  -webkit-backdrop-filter: blur(0.2rem); /* Safari */
   border-radius: 0.5rem;
   box-shadow: inset 0 0 0.5rem 0.25rem var(--color-primary);
 }
 
 .primary-bottom-shadow {
-   box-shadow: 0 0.125rem 0.25rem 0 var(--color-ring);
+  box-shadow: 0 0.125rem 0.25rem 0 var(--color-ring);
 }
 
 .input-green-border {
+  background-color: var(--color-primary-foreground);
   border-color: var(--color-primary);
-  opacity: 90%;
 }
 
-.input-green-border:focus, .input-green-border:hover {
+.input-green-border:focus,
+.input-green-border:hover {
   border: 0.1rem solid var(--color-primary-hover);
   outline: none;
-  box-shadow: 0 0 0.25rem 0 var(--color-primary-hover);
-  cursor: pointer;
-}
-
-.forgot-link {
-  color: var(--color-secondary);
-  text-decoration: underline;
-  text-underline-offset: 0.1rem;
-  transition: color 0.2s;
-}
-
-.forgot-link:hover {
+  box-shadow: 0 0 1rem 0 var(--color-primary-hover);
   cursor: pointer;
 }
 
